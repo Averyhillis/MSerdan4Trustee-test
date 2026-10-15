@@ -230,102 +230,83 @@
   .vcard.dark .vbtns a{border:1px solid rgba(255,255,255,.4);color:#fff;text-decoration:none}
   .vcard.dark .note{font-size:13px;min-height:1.4em;margin-top:10px;color:var(--accent)}
 
+  /* 桌面端隐藏手机专用的元素 */
+  .mcard, .chips.mob { display: none; }
+
   /* =====================================================
-     手机端 / 平板：左边 标题 → 简介 → 地点标签，右边 大照片卡片
-     （放在最后，覆盖前面的规则）
+     手机端 / 平板：照片靠右浮动，文字围绕照片，延伸到照片下方
      ===================================================== */
   @media (max-width: 960px) {
     .hero { padding: 14px 0 28px; }
     .hero .wrap { padding: 0 16px; }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 40vw;   /* 照片再大：改成 44vw */
-      column-gap: 12px;
-      row-gap: 0;                                   /* 去掉标签和标题之间的大空白 */
-      align-items: start;
-    }
-    /* 左侧 div 不生成盒子，子元素直接成为网格项 */
-    .hero-grid > div { display: contents; }
+    .hero-grid { display: block; }
+    .hero-grid > div { display: flow-root; }
+    .side, .chips.desk { display: none; }          /* 隐藏桌面版卡片和标签 */
 
-    /* 第 1 行：标签 */
+    /* 标签：独占一行 */
     .tag {
-      grid-column: 1 / -1; grid-row: 1;
-      justify-self: start;
+      display: flex; width: fit-content; max-width: 100%;
       margin: 0 0 12px;
       font-size: 10px; letter-spacing: .08em; padding: 7px 12px;
     }
 
-    /* 左，第 2 行：标题 */
-    .hl {
-      grid-column: 1; grid-row: 2;
-      margin: 0;
-      font-size: 20px;
-      line-height: 1.1;
+    /* 照片卡片：靠右浮动 */
+    .mcard {
+      display: block;
+      float: right;
+      width: 44vw;                                  /* 照片再大：改成 48vw */
+      margin: 0 0 10px 12px;
+      padding: 4px 4px 9px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(15,42,84,.10);
+      text-align: center;
     }
+    .mphoto {
+      width: 100%;
+      aspect-ratio: 100 / 140;
+      overflow: hidden;
+      border-radius: 10px;
+      background: var(--navy);
+    }
+    .mphoto img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      transform: scale(1.27);                       /* 裁掉照片自带的白边；白边还多就调大，如 1.35 */
+      transform-origin: 50% 50%;
+      display: block;
+    }
+    .mname { margin-top: 8px; font-size: 15px; line-height: 1.15; color: var(--navy); }
+    .mrole { margin-top: 3px; font-size: 9.5px; line-height: 1.25; color: var(--muted); }
+
+    /* 标题：在照片左边 */
+    .hl { margin: 0; font-size: 20px; line-height: 1.1; }
     .hl .slogan {
-      font-size: clamp(17px, 5vw, 22px);
-      white-space: normal;
-      line-height: 1.15;
+      font-size: clamp(16px, 4.6vw, 20px);
+      white-space: normal; line-height: 1.15;
     }
     .hl .slogan .br { display: inline; }
-    .hl .vf {
-      font-size: clamp(15px, 4.2vw, 18px);
-      margin-top: .7em;
-    }
+    .hl .vf { font-size: clamp(14px, 4vw, 17px); margin-top: .7em; }
     .hl .nm {
-      font-size: clamp(18px, 5vw, 22px);
-      margin-top: .25em;
-      white-space: normal;
-      line-height: 1.1;
+      font-size: clamp(17px, 4.8vw, 21px);
+      margin-top: .25em; white-space: normal; line-height: 1.12;
     }
-    .hl .nm .ul { padding-bottom: 4px; }
+    .hl .nm .ul { display: inline; padding-bottom: 2px; }
 
-    /* 左，第 3 行：简介文字（原 3 号） */
+    /* 简介：先在照片旁边排，排到照片下方后自动变成整行宽度 */
     .lead {
-      grid-column: 1; grid-row: 3;
-      margin: 14px 0 0;
-      font-size: 13.5px; line-height: 1.55;
+      margin: 12px 0 0;
+      font-size: 14px; line-height: 1.6;
       max-width: none;
     }
 
-    /* 左，第 4 行：地点标签（原 4 号，放在简介下面） */
-    .chips {
-      grid-column: 1; grid-row: 4;
-      margin-top: 12px; gap: 6px;
-    }
-    .chip { font-size: 11.5px; padding: 4px 11px; }
+    /* 地点标签：在简介下面 */
+    .chips.mob { display: flex; clear: both; margin-top: 14px; gap: 8px; }
+    .chip { font-size: 12px; padding: 4px 12px; }
 
-    /* 右：照片卡片，纵向占 2~4 行，照片更大 */
-    .side {
-      grid-column: 2; grid-row: 2 / span 3;
-      position: static; margin: 0;
-    }
-    .card {
-      padding: 5px 5px 10px;
-      border-radius: 14px;
-      text-align: center;
-      box-shadow: 0 8px 24px rgba(15,42,84,.10);
-    }
-    .card:before { display: none; }
-    .card-top, .checks, .tiles, .row2 { display: none; }
-
-    .photo {
-      width: 100%;
-      max-width: none;
-      aspect-ratio: 1 / 1.2;
-      margin: 0;
-      border-radius: 8px;
-    }
-    .photo img { transform: none; object-position: top center; }
-    .name { margin: 8px 0 0; font-size: 15px !important; line-height: 1.15; }
-    .role { margin: 3px 0 0; font-size: 10px !important; line-height: 1.25; }
-
-    /* 按钮：第 5 行，横跨整行 */
-    .cta {
-      grid-column: 1 / -1; grid-row: 5;
-      margin-top: 18px; display: flex; gap: 10px;
-    }
+    .cta { margin-top: 16px; display: flex; gap: 10px; }
     .btn { height: 42px; padding: 0 20px; font-size: 14px; }
     .quote { display: none; }
   }
@@ -347,18 +328,28 @@
     <div class="wrap hero-grid">
       <div>
         <span class="tag">Public School Board Trustee · Windsor</span>
+        <div class="mcard">
+          <div class="mphoto"><img src="michael_serdan_square.png" alt="Michael Serdan - Candidate for Public School Board Trustee Windsor"></div>
+          <div class="mname serif">Michael Serdan</div>
+          <div class="mrole">Father • Volunteer • Advocate</div>
+        </div>
         <h1 class="hl">
           <span class="ln slogan">Support <span class="br">Parents’ Rights.</span></span>
           <span class="ln vf">Vote for</span>
           <span class="ln nm"><span class="ul">Michael Serdan.</span></span>
         </h1>
 
-        <div class="chips">
+        <div class="chips desk">
           <span class="chip">📍 Windsor, Ontario</span>
           <span class="chip muted">GECDSB • Public Schools</span>
         </div>
 
         <p class="lead">I'm a concerned father and husband with two kids in Windsor public schools. I'm running because parents deserve a real voice — for safe schools, basic literacy first, and financial accountability.</p>
+
+        <div class="chips mob">
+          <span class="chip">📍 Windsor, Ontario</span>
+          <span class="chip muted">GECDSB • Public Schools</span>
+        </div>
 
         <div class="cta">
           <a class="btn primary" href="mailto:MVSerdan8@Gmail.com">Email Michael →</a>
