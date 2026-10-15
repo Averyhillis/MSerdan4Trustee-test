@@ -231,60 +231,58 @@
   .vcard.dark .vbtns a{border:1px solid rgba(255,255,255,.4);color:#fff;text-decoration:none}
   .vcard.dark .note{font-size:13px;min-height:1.4em;margin-top:10px;color:var(--accent)}
 
-  /* =====================================================
-     手机/平板修复：照片卡片置顶，缩成「头像 + 姓名」横条
-     （必须放在所有 CSS 的最后，才能覆盖前面的规则）
-     ===================================================== */
-  @media (max-width: 960px) {
-    .hero { padding: 24px 0 40px; }
-    .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+/* =====================================================
+   手机/平板修复：照片卡片置顶，缩成「头像 + 姓名」横条
+   ===================================================== */
+	@media (max-width: 960px) {
+	  .hero { padding: 24px 0 40px; }
+	  .hero-grid { grid-template-columns: 1fr; gap: 24px; }
 
-    /* 照片卡片排到标题上方 */
-    .side { order: -1; position: static; }
+	  /* 照片卡片排到标题上方 */
+	  .side { order: -1; position: static; }
 
-    /* 卡片变成紧凑横条 */
-    .card {
-      display: grid;
-      grid-template-columns: 96px 1fr;
-      grid-template-rows: auto auto;
-      column-gap: 16px;
-      align-items: center;
-      padding: 14px 16px;
-      border-radius: 18px;
-    }
+	  /* 卡片变成紧凑横条 */
+	  .card {
+	    display: flex; /* 改用 Flex 布局，避免网格重叠错位 */
+	    align-items: center;
+	    gap: 16px;
+	    padding: 14px 16px;
+	    border-radius: 18px;
+	  }
 
-    /* 手机上隐藏重复内容（下方页面都有） */
-    .card-top,
-    .checks,
-    .tiles,
-    .row2 { display: none; }
+	  /* 手机上隐藏重复内容 */
+	  .card-top,
+	  .checks,
+	  .tiles,
+	  .row2 { display: none; }
 
-    .photo {
-      grid-column: 1;
-      grid-row: 1 / span 2;
-      width: 96px;
-      margin: 0;
-      aspect-ratio: 1 / 1.1;
-      border-radius: 10px;
-    }
-    .photo img { transform: scale(1.15); transform-origin: 50% 18%; }
+	  /* 限制照片宽高，防止撑开或遮挡文字 */
+	  .photo {
+	    width: 80px;
+	    height: 80px;
+	    min-width: 80px;
+	    margin: 0;
+	    border-radius: 10px;
+	    overflow: hidden;
+	  }
+	  .photo img { 
+	    width: 100%;
+	    height: 100%;
+	    object-fit: cover;
+	    transform: scale(1.15); 
+	    transform-origin: 50% 18%; 
+	  }
 
-    .name {
-      grid-column: 2;
-      grid-row: 1;
-      align-self: end;
-      text-align: left;
-      margin: 0;
-      font-size: 22px;
-    }
-    .role {
-      grid-column: 2;
-      grid-row: 2;
-      align-self: start;
-      text-align: left;
-      margin: 4px 0 0;
-    }
-  }
+	  .name {
+	    text-align: left;
+	    margin: 0;
+	    font-size: 20px;
+	  }
+	  .role {
+	    text-align: left;
+	    margin: 4px 0 0;
+	  }
+	}
 
   @media (max-width: 640px) {
     .hl { font-size: clamp(38px, 10.5vw, 56px); margin-top: 16px; }
@@ -378,7 +376,7 @@
       <div>
         <figure class="about-photo">
           <!-- 这张图换成你原来的「Your Neighbour」小图：把原文件里这一行 <img ...> 的 src 原样保留即可 -->
-          <img src="michael_serdan_about.jpg" width="357" height="465" alt="Michael Serdan, Windsor trustee candidate" loading="lazy" onerror="this.style.display='none'">
+          <img src="michael_serdan_square.png" width="357" height="465" alt="Michael Serdan, Windsor trustee candidate" loading="lazy" onerror="this.style.display='none'">
           <span class="np">Your Neighbour, Not a Politician</span>
           <figcaption><span>Michael Serdan, Windsor, Ontario</span><b>GECDSB • Trustee</b></figcaption>
         </figure>
