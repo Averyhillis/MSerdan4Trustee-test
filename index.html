@@ -231,29 +231,32 @@
   .vcard.dark .note{font-size:13px;min-height:1.4em;margin-top:10px;color:var(--accent)}
 
   /* =====================================================
-     手机端 / 平板：标题在左，照片卡片在右（放在最后，覆盖前面的规则）
+     手机端 / 平板：左边 标题 → 简介 → 地点标签，右边 大照片卡片
+     （放在最后，覆盖前面的规则）
      ===================================================== */
   @media (max-width: 960px) {
-    .hero { padding: 18px 0 32px; }
+    .hero { padding: 14px 0 28px; }
+    .hero .wrap { padding: 0 16px; }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 36vw;   /* 照片想再大：改成 40vw */
+      grid-template-columns: minmax(0, 1fr) 40vw;   /* 照片再大：改成 44vw */
       column-gap: 12px;
+      row-gap: 0;                                   /* 去掉标签和标题之间的大空白 */
       align-items: start;
     }
-    /* 关键：左侧 div 不生成盒子，子元素直接成为网格项 */
+    /* 左侧 div 不生成盒子，子元素直接成为网格项 */
     .hero-grid > div { display: contents; }
 
-    /* 标签：占满一行 */
+    /* 第 1 行：标签 */
     .tag {
       grid-column: 1 / -1; grid-row: 1;
       justify-self: start;
-      margin: 0 0 14px;
+      margin: 0 0 12px;
       font-size: 10px; letter-spacing: .08em; padding: 7px 12px;
     }
 
-    /* 左：标题（字更小，可换行） */
+    /* 左，第 2 行：标题 */
     .hl {
       grid-column: 1; grid-row: 2;
       margin: 0;
@@ -265,26 +268,41 @@
       white-space: normal;
       line-height: 1.15;
     }
-    .hl .slogan .br { display: inline; }   /* 自然换行："Support Parents’ / Rights." */
+    .hl .slogan .br { display: inline; }
     .hl .vf {
       font-size: clamp(15px, 4.2vw, 18px);
       margin-top: .7em;
     }
     .hl .nm {
-      font-size: clamp(19px, 5.3vw, 23px);
+      font-size: clamp(18px, 5vw, 22px);
       margin-top: .25em;
       white-space: normal;
       line-height: 1.1;
     }
     .hl .nm .ul { padding-bottom: 4px; }
 
-    /* 右：照片卡片（照片更大） */
+    /* 左，第 3 行：简介文字（原 3 号） */
+    .lead {
+      grid-column: 1; grid-row: 3;
+      margin: 14px 0 0;
+      font-size: 13.5px; line-height: 1.55;
+      max-width: none;
+    }
+
+    /* 左，第 4 行：地点标签（原 4 号，放在简介下面） */
+    .chips {
+      grid-column: 1; grid-row: 4;
+      margin-top: 12px; gap: 6px;
+    }
+    .chip { font-size: 11.5px; padding: 4px 11px; }
+
+    /* 右：照片卡片，纵向占 2~4 行，照片更大 */
     .side {
-      grid-column: 2; grid-row: 2;
+      grid-column: 2; grid-row: 2 / span 3;
       position: static; margin: 0;
     }
     .card {
-      padding: 6px 6px 10px;
+      padding: 5px 5px 10px;
       border-radius: 14px;
       text-align: center;
       box-shadow: 0 8px 24px rgba(15,42,84,.10);
@@ -295,23 +313,19 @@
     .photo {
       width: 100%;
       max-width: none;
-      aspect-ratio: 1 / 1.15;
+      aspect-ratio: 1 / 1.2;
       margin: 0;
       border-radius: 8px;
     }
-    .photo img {
-      transform: none;
-      object-position: top center;
-    }
-    .name { margin: 8px 0 0; font-size: 14px !important; line-height: 1.15; }
+    .photo img { transform: none; object-position: top center; }
+    .name { margin: 8px 0 0; font-size: 15px !important; line-height: 1.15; }
     .role { margin: 3px 0 0; font-size: 10px !important; line-height: 1.25; }
 
-    /* 其余内容横跨整行，依次往下排 */
-    .chips, .lead, .cta { grid-column: 1 / -1; }
-    .chips { margin-top: 18px; gap: 8px; }
-    .chip { font-size: 12px; padding: 4px 12px; }
-    .lead { margin-top: 14px; font-size: 15px; line-height: 1.6; max-width: none; }
-    .cta { margin-top: 18px; display: flex; gap: 10px; }
+    /* 按钮：第 5 行，横跨整行 */
+    .cta {
+      grid-column: 1 / -1; grid-row: 5;
+      margin-top: 18px; display: flex; gap: 10px;
+    }
     .btn { height: 42px; padding: 0 20px; font-size: 14px; }
     .quote { display: none; }
   }
