@@ -231,7 +231,7 @@
   .vcard.dark .note{font-size:13px;min-height:1.4em;margin-top:10px;color:var(--accent)}
 
   /* 桌面端隐藏手机专用的元素 */
-  .mcard, .chips.mob { display: none; }
+  .mcard, .chips.mob, .vote-line { display: none; }
 
   /* =====================================================
      手机端 / 平板：照片靠右浮动，文字围绕照片，延伸到照片下方
@@ -284,16 +284,34 @@
     /* 标题：在照片左边 */
     .hl { margin: 0; font-size: 20px; line-height: 1.1; }
     .hl .slogan {
-      font-size: clamp(16px, 4.6vw, 20px);
+      font-size: clamp(18px, 5.8vw, 24px);
       white-space: normal; line-height: 1.15;
     }
     .hl .slogan .br { display: inline; }
-    .hl .vf { font-size: clamp(14px, 4vw, 17px); margin-top: .7em; }
-    .hl .nm {
-      font-size: clamp(17px, 4.8vw, 21px);
-      margin-top: .25em; white-space: normal; line-height: 1.12;
+    /* 原来的 Vote for / 名字 在手机上隐藏，改用上面整行的 .vote-line */
+    .hl .vf, .hl .nm { display: none; }
+
+    /* "Vote for Michael Serdan." 放在标签下面、照片上面，占约 2/3 行宽 */
+    .vote-line {
+      display: block;
+      margin: 0 0 12px;
+      white-space: nowrap;
+      line-height: 1.15;
     }
-    .hl .nm .ul { display: inline; padding-bottom: 2px; }
+    .vote-line .v {
+      font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+      font-weight: 800; letter-spacing: -.02em;
+      font-size: clamp(14px, 4vw, 17px);
+      color: var(--navy);
+    }
+    .vote-line .n {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 900; letter-spacing: -.02em;
+      font-size: clamp(20px, 5.8vw, 25px);       /* 想更大：改成 6.4vw / 28px */
+      color: var(--navy);
+      background: linear-gradient(transparent 88%, #d4a017 88%);
+      padding-bottom: 3px;
+    }
 
     /* 简介：先在照片旁边排，排到照片下方后自动变成整行宽度 */
     .lead {
@@ -369,6 +387,7 @@
     <div class="wrap hero-grid">
       <div>
         <span class="tag">Public School Board Trustee · Windsor</span>
+        <div class="vote-line" aria-hidden="true"><span class="v">Vote for</span> <span class="n">Michael Serdan.</span></div>
         <div class="mcard">
           <div class="mphoto"><img src="michael_serdan_square.png" alt="Michael Serdan - Candidate for Public School Board Trustee Windsor"></div>
           <div class="mname serif">Michael Serdan</div>
