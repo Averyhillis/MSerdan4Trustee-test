@@ -231,38 +231,92 @@
   .vcard.dark .vbtns a{border:1px solid rgba(255,255,255,.4);color:#fff;text-decoration:none}
   .vcard.dark .note{font-size:13px;min-height:1.4em;margin-top:10px;color:var(--accent)}
 
-/* =====================================================
-   手机/平板修复：照片卡片置顶，缩成「头像 + 姓名」横条
-   ===================================================== */
+
 	@media (max-width: 960px) {
-	  .hero { padding: 24px 0 40px; }
-	  .hero-grid { grid-template-columns: 1fr; gap: 24px; }
-
-	  /* 照片卡片排到标题上方 */
-	  .side { order: -1; position: static; }
-
-	  /* 卡片变成紧凑横条 */
-	  .card {
-	    display: flex; /* 改用 Flex 布局，避免网格重叠错位 */
-	    align-items: center;
-	    gap: 16px;
-	    padding: 14px 16px;
-	    border-radius: 18px;
+	  
+	  .hero { 
+	    padding: 12px 0 24px; 
+	  }
+	  
+	  .hero-grid { 
+	    display: flex;
+	    flex-direction: column;
+	    gap: 12px; 
 	  }
 
-	  /* 手机上隐藏重复内容 */
+	  
+	  .hero-grid > div { order: 1; }
+
+	  
+	  .side { 
+	    order: 2; 
+	    position: static; 
+	    width: 100%;
+	  }
+
+	  
+	  .tag {
+	    font-size: clamp(9px, 2.5vw, 11px);
+	    padding: 5px 12px;
+	  }
+
+	  
+	  .hl { 
+	    font-size: clamp(28px, 7.5vw, 42px); 
+	    margin-top: 10px; 
+	    line-height: 1.08;
+	  }
+
+	  
+	  .chips { 
+	    margin-top: 10px; 
+	    gap: 6px; 
+	  }
+	  .chip { 
+	    font-size: clamp(10px, 2.8vw, 12px); 
+	    padding: 4px 10px; 
+	  }
+
+	  
+	  .lead { 
+	    margin-top: 10px; 
+	    font-size: clamp(12px, 3.2vw, 14px); 
+	    line-height: 1.45; 
+	  }
+
+	  
+	  .cta { 
+	    margin-top: 12px; 
+	    gap: 8px; 
+	  }
+	  .btn { 
+	    height: 38px; 
+	    padding: 0 18px; 
+	    font-size: 13px; 
+	  }
+
+	  
+	  .card {
+	    display: flex;
+	    align-items: center;
+	    gap: 12px;
+	    padding: 10px 14px;
+	    border-radius: 14px;
+	  }
+
+
 	  .card-top,
 	  .checks,
 	  .tiles,
 	  .row2 { display: none; }
 
-	  /* 限制照片宽高，防止撑开或遮挡文字 */
+	  
 	  .photo {
-	    width: 80px;
-	    height: 80px;
-	    min-width: 80px;
+	    width: clamp(56px, 15vw, 70px);
+	    height: clamp(62px, 16.5vw, 76px);
+	    min-width: clamp(56px, 15vw, 70px);
 	    margin: 0;
-	    border-radius: 10px;
+	    border-radius: 8px;
 	    overflow: hidden;
 	  }
 	  .photo img { 
@@ -273,14 +327,18 @@
 	    transform-origin: 50% 18%; 
 	  }
 
+
 	  .name {
 	    text-align: left;
 	    margin: 0;
-	    font-size: 20px;
+	    font-size: clamp(16px, 4.5vw, 19px);
+	    line-height: 1.2;
 	  }
 	  .role {
 	    text-align: left;
-	    margin: 4px 0 0;
+	    margin: 2px 0 0;
+	    font-size: clamp(11px, 3vw, 12px);
+	    color: var(--muted);
 	  }
 	}
 
